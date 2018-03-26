@@ -10,7 +10,7 @@ cache:
 jobs:
   include:
   - stage: deploy-stage
-    if: tag IS blank
+    if: tag IS present
     script:
     - npm run lint
     - npm run test
@@ -20,8 +20,6 @@ jobs:
       app: shri-git-task-4-stage
       api_key:
         secure: W2Y+udJgNGlkQJRDNiqc8GYIroYHTSfZGZMcRGrX6I2lARojcm+ta4FsIfyv3kf9nkGPvpOarioHFNFpFnIf6Ecb80PF3dzBTkgHXJAzhtPyWI2QLDzEIqvmUeWtxQN8h3jEedsEj6edevSHE2KuX1kC/hfubVlpUwwhM2qd1L8cGIW4AVZYgjSFhb6XogZGnkC3dKs5ggATrHfreoJe6zfolg1080PP152aq7A+IB+A7A1Jss/lZb7c4V4S2QRhaRbIyFB8zp4VNJXzuua4ElBykbdYjmffEaFPRra/WvNDZpBJ9tEIz0EzYFxMyBI7rfEQVLm15eshUmnNrsROaR7dU4dlZmZs5AbEjqdwAs57wP+oh/DBfsEQi5S7MpbOHZq7fI3m0Hu7KYJtFcDNGYDdkjLEQ1xA2sS4Pha4m52c5VbcPMgNNnXSLUBbIQQrgA62g2+UclcAUIJ/4qxPlA8ZN13qimSc2xPvKEdEEypJEPSCUmGfhsibjDCiG7m2a/ymtj/2zPHxgaFstBioRInPHuXFlfBQwqEMRWvCx4DYZnTN30bMp5y1yPg+wotfUuhfXJO0F8xzgTmyLVdG5gWZq49oh0E597b3+PFDAGKwZjx1z5Cqqmtg3hYuwOsjCoz+AfEWgdi7u289GGY0l2YWvC+04suiZe62w3YfHRw=
-      on:
-        repo: jnkbldgn/task-4
   - stage: deploy-prod
     if: tag IS present
     script:
@@ -35,4 +33,3 @@ jobs:
         secure: W2Y+udJgNGlkQJRDNiqc8GYIroYHTSfZGZMcRGrX6I2lARojcm+ta4FsIfyv3kf9nkGPvpOarioHFNFpFnIf6Ecb80PF3dzBTkgHXJAzhtPyWI2QLDzEIqvmUeWtxQN8h3jEedsEj6edevSHE2KuX1kC/hfubVlpUwwhM2qd1L8cGIW4AVZYgjSFhb6XogZGnkC3dKs5ggATrHfreoJe6zfolg1080PP152aq7A+IB+A7A1Jss/lZb7c4V4S2QRhaRbIyFB8zp4VNJXzuua4ElBykbdYjmffEaFPRra/WvNDZpBJ9tEIz0EzYFxMyBI7rfEQVLm15eshUmnNrsROaR7dU4dlZmZs5AbEjqdwAs57wP+oh/DBfsEQi5S7MpbOHZq7fI3m0Hu7KYJtFcDNGYDdkjLEQ1xA2sS4Pha4m52c5VbcPMgNNnXSLUBbIQQrgA62g2+UclcAUIJ/4qxPlA8ZN13qimSc2xPvKEdEEypJEPSCUmGfhsibjDCiG7m2a/ymtj/2zPHxgaFstBioRInPHuXFlfBQwqEMRWvCx4DYZnTN30bMp5y1yPg+wotfUuhfXJO0F8xzgTmyLVdG5gWZq49oh0E597b3+PFDAGKwZjx1z5Cqqmtg3hYuwOsjCoz+AfEWgdi7u289GGY0l2YWvC+04suiZe62w3YfHRw=
       on:
         tags: true
-deploy:
