@@ -11,7 +11,7 @@ const config = {
     dateFormat: 'DD-MMM-YYYY HH:mm',
     port: process.env.PORT || '8080',
     host: '0.0.0.0',
-    repoPath: './repo/ember-truth-helpers.git',
+    repoPath: './repo/',
   },
 };
 
