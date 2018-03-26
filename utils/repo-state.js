@@ -15,27 +15,22 @@ function RepoState(repoPath) {
 
 RepoState.prototype = {
   getBranches: async function getBranches() {
-    try {
+    return new Promise((resolve) => {
       const resultSpawn = spawn('git', ['branch', '-v'], { cwd: this.repoPath });
       let dataSpawn = '';
       resultSpawn.stdout.on('data', (data) => {
         dataSpawn += data;
       });
-      await new Promise((resolve) => {
-        resultSpawn.on('close', () => {
-          this.branches = parsers.branches(dataSpawn, this.hashCurrent);
-          this.commites = [];
-          this.tree = [];
-          resolve();
-        });
+      resultSpawn.on('close', () => {
+        this.branches = parsers.branches(dataSpawn, this.hashCurrent);
+        this.commites = [];
+        this.tree = [];
+        resolve();
       });
-    } catch (e) {
-      throw (e);
-    }
+    });
   },
   getCommites: async function getCommites(hashBranch) {
-    try {
-      if (!hashBranch) return;
+    return new Promise((resolve) => {
       this.hashCurrent = hashBranch;
       this.hashBranch = hashBranch;
       this.hashCommit = '';
@@ -44,22 +39,18 @@ RepoState.prototype = {
       commitesSpawn.stdout.on('data', (data) => {
         commitesData += data;
       });
-      await new Promise((resolve) => {
-        commitesSpawn.on('close', () => {
-          this.commites = parsers.commites(commitesData, hashBranch);
-          this.branches.sort((a) => {
-            const result = a.name.toString() === hashBranch.toString() ? -1 : 1;
-            return result;
-          });
-          resolve();
+      commitesSpawn.on('close', () => {
+        this.commites = parsers.commites(commitesData, hashBranch);
+        this.branches.sort((a) => {
+          const result = a.name.toString() === hashBranch.toString() ? -1 : 1;
+          return result;
         });
+        resolve();
       });
-    } catch (e) {
-      throw (e);
-    }
+    });
   },
   getTree: async function getTree(hashCommit, saveHistory) {
-    try {
+    return new Promise((resolve) => {
       if (!hashCommit) return;
       if (saveHistory) this.hashParents.push(this.hashCurrent);
       this.hashCurrent = hashCommit;
@@ -69,22 +60,18 @@ RepoState.prototype = {
       resultSpawn.stdout.on('data', (data) => {
         dataSpawn += data;
       });
-      await new Promise((resolve) => {
-        resultSpawn.on('close', () => {
-          this.tree = parsers.tree(dataSpawn);
-          this.tree.sort((a) => {
-            const result = a.isTree ? -1 : 1;
-            return result;
-          });
-          resolve();
+      resultSpawn.on('close', () => {
+        this.tree = parsers.tree(dataSpawn);
+        this.tree.sort((a) => {
+          const result = a.isTree ? -1 : 1;
+          return result;
         });
+        resolve();
       });
-    } catch (e) {
-      throw (e);
-    }
+    });
   },
   getFile: async function getFile(hasFile) {
-    try {
+    return new Promise((resolve) => {
       if (!hasFile) return;
       this.hashCurrent = hasFile;
       const resultSpawn = spawn('git', ['show', this.hashCurrent], { cwd: this.repoPath });
@@ -92,15 +79,11 @@ RepoState.prototype = {
       resultSpawn.stdout.on('data', (data) => {
         dataSpawn += data;
       });
-      await new Promise((resolve) => {
-        resultSpawn.on('close', () => {
-          this.file = parsers.file(dataSpawn, this.hasParent);
-          resolve();
-        });
+      resultSpawn.on('close', () => {
+        this.file = parsers.file(dataSpawn, this.hasParent);
+        resolve();
       });
-    } catch (e) {
-      throw (e);
-    }
+    });
   },
 };
 
