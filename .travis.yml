@@ -1,0 +1,42 @@
+language: node_js
+
+sudo: false
+
+node_js:
+  - "9"
+
+notifications: 
+  email: false
+
+cache:
+  directories:
+    - "node_modules"
+
+jobs:
+  include:
+    - stage: deploy-stage
+      if: tag IS blank
+      script:
+      - npm run lint
+      - npm run test
+      - npm run build
+      deploy:
+        provider: heroku
+        app: shri-git-task-4-stage
+        on:
+          repo: jnkbldgn/task-4
+  
+
+    - stage: deploy-prod
+      if: tag IS present
+      script:
+      - npm run lint
+      - npm run test
+      - npm run build
+      deploy:
+        provider: heroku
+        on:
+          repo: jnkbldgn/task-4
+        app: shri-git-task-4
+        on:
+          tags: true
