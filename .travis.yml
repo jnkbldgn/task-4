@@ -10,7 +10,7 @@ cache:
 jobs:
   include:
   - stage: deploy-stage
-    if: tag IS present
+    if: tag IS blank
     script:
     - npm run lint
     - npm run test
