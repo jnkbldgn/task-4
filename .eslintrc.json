@@ -1,0 +1,20 @@
+{
+    "extends": "airbnb-base",
+    "plugins": [
+        "import"
+    ],
+    "env": {
+        "node": true,
+        "es6": true
+    },
+    "rules": { 
+        "import/no-extraneous-dependencies": 0,
+        "import/no-unresolved": 0,
+        "import/prefer-default-export": "warn"
+    },
+    "globals": {
+      "window": true,
+      "document": true,
+      "navigator": true
+    }
+}

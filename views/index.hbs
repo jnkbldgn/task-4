@@ -1,0 +1,68 @@
+<div class="container">
+  {{#if file}}
+  <div class="file-modal">
+    <div class="file-modal__close">x</div>
+    <pre>
+      {{file.content}}
+    </pre>
+  </div>
+  {{/if}}
+  <div class="navigation navigation__branches">
+    <div class="navigation__title">Branches</div>
+    <div class="navigation-scroll">
+    {{#each branches as |branch|}}
+      <a class="navigation__item navigation__item-branch {{#eq branch.name ../selectBranch}}navigation__item-selected{{/eq}}" 
+        {{#if ../selectCommit}}
+          href="/branch/{{this.name}}"
+        {{else}}
+          {{#eq branch.name ../selectBranch}}
+          disabled 
+          {{else}}
+          href="/branch/{{this.name}}"
+          {{/eq}}
+        {{/if}}
+      >
+        <div>{{branch.name}}</div>
+      </a>
+    {{/each}}
+    </div>
+  </div>
+  <div class="navigation navigation__tree">
+    <div class="navigation__title">Tree</div>
+      <div class="navigation-scroll">
+      {{#if hashParent}}
+        <a class="navigation__item navigation__item-tree" 
+        href="/parent/{{selectBranch}}/{{#if selectCommit }}{{selectCommit}}/{{/if}}{{hashParent}}">..</a>
+      {{/if}}
+    {{#each tree}}
+      <a class="navigation__item navigation__item-tree"
+        {{#if this.isTree}}
+        href="/tree/{{../selectBranch}}/{{#if ../selectCommit }}{{../selectCommit}}/{{/if}}{{this.hash}}"
+        {{else}}
+        href="/file/{{../selectBranch}}/{{#if ../selectCommit }}{{../selectCommit}}/{{/if}}{{this.hash}}"
+        {{/if}}
+        >
+        <div>{{this.name}}</div>
+      </a>
+    {{/each}}
+    </div>
+  </div>
+  <div class="navigation navigation__commits">
+    <div class="navigation__title">Commites</div>
+    <div class="navigation-scroll">
+    {{#each commites}}
+      <a class="navigation__item navigation__item-commit {{#eq this.fullHash ../selectCommit}}navigation__item-selected{{/eq}}" 
+        {{#eq this.fullHash ../selectCommit}}
+          disabled 
+        {{else}}
+          href="/commit/{{this.hashBranch}}/{{this.fullHash}}"
+        {{/eq}}
+      >
+      <div>{{this.author}}</div>
+      <div>{{this.date}}</div>
+      <div>{{this.commit}}</div>
+    </a>
+    {{/each}}
+    </div>
+  </div>
+</div>

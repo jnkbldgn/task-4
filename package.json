@@ -1,0 +1,54 @@
+{
+  "name": "task-4",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Complited\" && exit 0",
+    "start": "export NODE_ENV=production && node index.js",
+    "start:dev": "\"./node_modules/gulp/bin/gulp.js\" dev",
+    "build": "\"./node_modules/gulp/bin/gulp.js\" build",
+    "lint:js": "\"./node_modules/eslint/bin/eslint.js\" \"**/*.js\"",
+    "lint:jsfix": "\"./node_modules/eslint/bin/eslint.js\" --fix \"**/*.js\"",
+    "lint:styles": "stylelint \"**/*.sass\" --config .stylelintrc.json",
+    "lint:stylesfix": "stylelint \"**/*.sass\" --fix",
+    "lint": "npm run lint:styles && npm run lint:js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jnkbldgn/task-4.git"
+  },
+  "author": "Buldygin E.M.",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jnkbldgn/task-4/issues"
+  },
+  "homepage": "https://github.com/jnkbldgn/task-4#readme",
+  "devDependencies": {
+    "body-parser": "^1.18.2",
+    "cookie-parser": "^1.4.3",
+    "eslint": "^4.19.0",
+    "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-import": "^2.9.0",
+    "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^5.0.0",
+    "gulp-clean-css": "^3.9.3",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-postcss": "^7.0.1",
+    "gulp-sass": "^3.2.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "gulp-watch": "^5.0.0",
+    "moment": "^2.21.0",
+    "postcss-reporter": "^5.0.0",
+    "postcss-scss": "^1.0.4",
+    "rimraf": "^2.6.2",
+    "stylelint": "^9.1.3",
+    "stylelint-config-sass-guidelines": "^5.0.0"
+  },
+  "dependencies": {
+    "handlebars-helpers": "^0.10.0"
+  }
+}
