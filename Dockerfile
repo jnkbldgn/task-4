@@ -10,9 +10,9 @@ RUN npm install
 COPY . .
 
 RUN npm run build
-RUN mkdir ./repo
+RUN mkdir ./repo/
 
-RUN git clone --mirror https://github.com/jmurphyau/ember-truth-helpers.git ./repo
+RUN git clone --mirror https://github.com/jmurphyau/ember-truth-helpers.git ./repo/
 
 
 CMD [ "npm", "run", "start" ]
