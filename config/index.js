@@ -9,7 +9,7 @@ const config = {
   },
   default: {
     dateFormat: 'DD-MMM-YYYY HH:mm',
-    port: '8080',
+    port: process.env.PORT || '8080',
     host: '0.0.0.0',
     repoPath: './repo/ember-truth-helpers.git',
   },
