@@ -19,6 +19,19 @@
 Создание build<br>
 <code>npm run build</code>
 
+Запуск unit тестов<br> 
+<code>npm run test</code>
+
+Перед запуском интеграционных тестов, следует установить selenium
+<code>selenium-standalone --global</code>
+<code>selenium-standalone install</code>
+Далее в отдельной вкладке терминала запустить selenium
+<code>selenium-standalone start</code>
+После запустить проект, например:
+<code>npm run start:dev</code>
+Запуск интеграционных тестов<br> 
+<code>npm run test:i</code>
+
 Для сборки используется gulp
 
 Настроена сборка Docker-контейнера.

@@ -1,87 +1,65 @@
-const { spawn } = require('child_process');
+
 const { parsers } = require('./parsers');
+const { gitSpawn } = require('./git-commands');
 
 class RepoState {
-  constructor(repoPath) {
+  constructor() {
     this.hashDefault = 'master';
     this.hashCurrent = this.hashDefault;
     this.hashBranch = '';
     this.hashCommit = '';
     this.hashParents = [];
-    this.repoPath = repoPath;
     this.branches = [];
     this.commites = [];
     this.tree = [];
   }
-  getBranches() {
+  async getBranches(spawn = gitSpawn) {
+    const command = 'git branch -v';
+    const resultSpawn = await spawn(command);
     return new Promise((resolve) => {
-      const resultSpawn = spawn('git', ['branch', '-v'], { cwd: this.repoPath });
-      let dataSpawn = '';
-      resultSpawn.stdout.on('data', (data) => {
-        dataSpawn += data;
-      });
-      resultSpawn.on('close', () => {
-        this.branches = parsers.branches(dataSpawn, this.hashCurrent);
-        this.commites = [];
-        this.tree = [];
-        resolve();
-      });
+      this.branches = parsers.branches(resultSpawn, this.hashCurrent);
+      this.commites = [];
+      this.tree = [];
+      resolve();
     });
   }
-  getCommites(hashBranch) {
+  async getCommites(hashBranch, spawn = gitSpawn) {
+    this.hashCurrent = hashBranch;
+    this.hashBranch = hashBranch;
+    this.hashCommit = '';
+    const command = `git log --date=raw --pretty=format:'%H\t%p\t%an\t%aI\t%s' ${this.hashCurrent}`;
+    const resultSpawn = await spawn(command);
     return new Promise((resolve) => {
-      this.hashCurrent = hashBranch;
-      this.hashBranch = hashBranch;
-      this.hashCommit = '';
-      const commitesSpawn = spawn('git', ['log', '--date=raw', '--pretty=format:"%H\t%p\t%an\t%aI\t%s', this.hashCurrent], { cwd: this.repoPath });
-      let commitesData = '';
-      commitesSpawn.stdout.on('data', (data) => {
-        commitesData += data;
+      this.commites = parsers.commites(resultSpawn, hashBranch);
+      this.branches.sort((a) => {
+        const result = a.name.toString() === hashBranch.toString() ? -1 : 1;
+        return result;
       });
-      commitesSpawn.on('close', () => {
-        this.commites = parsers.commites(commitesData, hashBranch);
-        this.branches.sort((a) => {
-          const result = a.name.toString() === hashBranch.toString() ? -1 : 1;
-          return result;
-        });
-        resolve();
-      });
+      resolve();
     });
   }
-  async getTree(hashCommit, saveHistory) {
+  async getTree(hashCommit, saveHistory, spawn = gitSpawn) {
+    if (saveHistory) this.hashParents.push(this.hashCurrent);
+    this.hashCurrent = hashCommit;
+    this.hashCommit = hashCommit;
+    const command = `git ls-tree --full-name ${this.hashCurrent}`;
+    const resultSpawn = await spawn(command);
     return new Promise((resolve) => {
-      if (!hashCommit) return;
-      if (saveHistory) this.hashParents.push(this.hashCurrent);
-      this.hashCurrent = hashCommit;
-      this.hashCommit = hashCommit;
-      const resultSpawn = spawn('git', ['ls-tree', '--full-name', this.hashCurrent], { cwd: this.repoPath });
-      let dataSpawn = '';
-      resultSpawn.stdout.on('data', (data) => {
-        dataSpawn += data;
+      this.tree = parsers.tree(resultSpawn);
+      this.tree.sort((a) => {
+        const result = a.isTree ? -1 : 1;
+        return result;
       });
-      resultSpawn.on('close', () => {
-        this.tree = parsers.tree(dataSpawn);
-        this.tree.sort((a) => {
-          const result = a.isTree ? -1 : 1;
-          return result;
-        });
-        resolve();
-      });
+      resolve();
     });
   }
-  getFile(hasFile) {
+  async getFile(hasFile, spawn = gitSpawn) {
+    this.hashCurrent = hasFile;
+    const command = `git show ${this.hashCurrent}`;
+    const resultSpawn = await spawn(command);
     return new Promise((resolve) => {
-      if (!hasFile) return;
-      this.hashCurrent = hasFile;
-      const resultSpawn = spawn('git', ['show', this.hashCurrent], { cwd: this.repoPath });
-      let dataSpawn = '';
-      resultSpawn.stdout.on('data', (data) => {
-        dataSpawn += data;
-      });
-      resultSpawn.on('close', () => {
-        this.file = parsers.file(dataSpawn, this.hasParent);
-        resolve();
-      });
+      this.file = parsers.file(resultSpawn);
+      resolve();
     });
   }
 }

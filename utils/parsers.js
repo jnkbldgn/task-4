@@ -20,7 +20,7 @@ function parserBranches(data) {
   return result;
 }
 
-function parserCommites(data, hashBranch, hashCommit) {
+function parserCommites(data, hashBranch) {
   if (!data || !data.length) {
     return [];
   }
@@ -28,9 +28,8 @@ function parserCommites(data, hashBranch, hashCommit) {
   const result = dataFormater && dataFormater.length ? dataFormater.map((item) => {
     const itemParts = item.split(/\t/);
     return {
-      fullHash: itemParts[0].replace(/^"/, ''),
+      fullHash: itemParts[0].replace(/^\W/, ''),
       hashBranch,
-      hashCommit,
       hash: itemParts[1],
       author: itemParts[2],
       date: moment.utc(itemParts[3]).format(config.dateFormat),

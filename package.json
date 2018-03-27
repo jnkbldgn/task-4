@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test:i": "\"./node_modules/hermione/bin/hermione\" tests/integration/*",
+    "test": "nyc mocha --reporter spec tests/unit/*",
     "start": "export NODE_ENV=production && node index.js",
     "start:dev": "export NODE_ENV=production && \"./node_modules/gulp/bin/gulp.js\" dev",
     "build": "\"./node_modules/gulp/bin/gulp.js\" build",
@@ -45,6 +46,7 @@
     "gulp-watch": "^5.0.0",
     "hermione": "^0.65.2",
     "moment": "^2.21.0",
+    "nyc": "^11.6.0",
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",
     "rimraf": "^2.6.2",

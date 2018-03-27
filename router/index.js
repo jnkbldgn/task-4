@@ -1,9 +1,8 @@
 const express = require('express');
 const { RepoState } = require('../utils/repo-state');
-const config = require('../config/').getConfig(express().get('env'));
 
 const router = express.Router();
-const repoState = new RepoState(config.repoPath);
+const repoState = new RepoState();
 
 async function index(req, res) {
   await repoState.getBranches();
