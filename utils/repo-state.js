@@ -1,20 +1,19 @@
 const { spawn } = require('child_process');
 const { parsers } = require('./parsers');
 
-function RepoState(repoPath) {
-  this.hashDefault = 'master';
-  this.hashCurrent = this.hashDefault;
-  this.hashBranch = '';
-  this.hashCommit = '';
-  this.hashParents = [];
-  this.repoPath = repoPath;
-  this.branches = [];
-  this.commites = [];
-  this.tree = [];
-}
-
-RepoState.prototype = {
-  getBranches: async function getBranches() {
+class RepoState {
+  constructor(repoPath) {
+    this.hashDefault = 'master';
+    this.hashCurrent = this.hashDefault;
+    this.hashBranch = '';
+    this.hashCommit = '';
+    this.hashParents = [];
+    this.repoPath = repoPath;
+    this.branches = [];
+    this.commites = [];
+    this.tree = [];
+  }
+  getBranches() {
     return new Promise((resolve) => {
       const resultSpawn = spawn('git', ['branch', '-v'], { cwd: this.repoPath });
       let dataSpawn = '';
@@ -28,8 +27,8 @@ RepoState.prototype = {
         resolve();
       });
     });
-  },
-  getCommites: async function getCommites(hashBranch) {
+  }
+  getCommites(hashBranch) {
     return new Promise((resolve) => {
       this.hashCurrent = hashBranch;
       this.hashBranch = hashBranch;
@@ -48,8 +47,8 @@ RepoState.prototype = {
         resolve();
       });
     });
-  },
-  getTree: async function getTree(hashCommit, saveHistory) {
+  }
+  async getTree(hashCommit, saveHistory) {
     return new Promise((resolve) => {
       if (!hashCommit) return;
       if (saveHistory) this.hashParents.push(this.hashCurrent);
@@ -69,8 +68,8 @@ RepoState.prototype = {
         resolve();
       });
     });
-  },
-  getFile: async function getFile(hasFile) {
+  }
+  getFile(hasFile) {
     return new Promise((resolve) => {
       if (!hasFile) return;
       this.hashCurrent = hasFile;
@@ -84,7 +83,7 @@ RepoState.prototype = {
         resolve();
       });
     });
-  },
-};
+  }
+}
 
 exports.RepoState = RepoState;
