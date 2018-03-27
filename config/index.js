@@ -16,4 +16,4 @@ const config = {
   },
 };
 
-exports.getConfig = env => Object.assign(config[env], config.default);
+exports.getConfig = env => Object.assign(config.default, config[env]);
