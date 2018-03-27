@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Complited\" && exit 0",
     "start": "export NODE_ENV=production && node index.js",
-    "start:dev": "\"./node_modules/gulp/bin/gulp.js\" dev",
+    "start:dev": "export NODE_ENV=production && \"./node_modules/gulp/bin/gulp.js\" dev",
     "build": "\"./node_modules/gulp/bin/gulp.js\" build",
     "lint:js": "\"./node_modules/eslint/bin/eslint.js\" \"**/*.js\"",
     "lint:jsfix": "\"./node_modules/eslint/bin/eslint.js\" --fix \"**/*.js\"",

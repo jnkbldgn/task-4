@@ -6,6 +6,7 @@ const config = {
   production: {
     isProd: true,
     isDev: false,
+    repoPath: '/repo/',
   },
   default: {
     dateFormat: 'DD-MMM-YYYY HH:mm',
@@ -15,4 +16,4 @@ const config = {
   },
 };
 
-exports.getConfig = env => Object.assign(config[env], config.default);
+exports.getConfig = env => Object.assign(config.default, config[env]);
