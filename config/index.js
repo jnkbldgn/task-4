@@ -6,6 +6,7 @@ const config = {
   production: {
     isProd: true,
     isDev: false,
+    repoPath: '/repo/',
   },
   default: {
     dateFormat: 'DD-MMM-YYYY HH:mm',
