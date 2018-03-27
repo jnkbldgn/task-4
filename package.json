@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Complited\" && exit 0",
+    "test:i": "\"./node_modules/hermione/bin/hermione\" tests/integration/*",
     "start": "export NODE_ENV=production && node index.js",
     "start:dev": "export NODE_ENV=production && \"./node_modules/gulp/bin/gulp.js\" dev",
     "build": "\"./node_modules/gulp/bin/gulp.js\" build",
@@ -26,6 +26,8 @@
   "homepage": "https://github.com/jnkbldgn/task-4#readme",
   "devDependencies": {
     "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "cheerio": "^1.0.0-rc.2",
     "cookie-parser": "^1.4.3",
     "eslint": "^4.19.0",
     "eslint-config-airbnb-base": "^12.1.0",
@@ -41,6 +43,7 @@
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-watch": "^5.0.0",
+    "hermione": "^0.65.2",
     "moment": "^2.21.0",
     "postcss-reporter": "^5.0.0",
     "postcss-scss": "^1.0.4",

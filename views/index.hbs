@@ -1,6 +1,6 @@
 <div class="container">
   {{#if file}}
-  <div class="file-modal">
+  <div class="file-modal selenium-show-file">
     <div class="file-modal__close">x</div>
     <pre>
       {{file.content}}
@@ -9,9 +9,9 @@
   {{/if}}
   <div class="navigation navigation__branches">
     <div class="navigation__title">Branches</div>
-    <div class="navigation-scroll">
+    <div class="navigation-scroll selenium-branches">
     {{#each branches as |branch|}}
-      <a class="navigation__item navigation__item-branch {{#eq branch.name ../selectBranch}}navigation__item-selected{{/eq}}" 
+      <a class="navigation__item navigation__item-branch selenium-branch-item {{#eq branch.name ../selectBranch}}navigation__item-selected{{/eq}}" 
         {{#if ../selectCommit}}
           href="/branch/{{this.name}}"
         {{else}}
@@ -22,43 +22,49 @@
           {{/eq}}
         {{/if}}
       >
-        <div>{{branch.name}}</div>
+        <div class="selenium-branch-name">{{branch.name}}</div>
       </a>
     {{/each}}
     </div>
   </div>
   <div class="navigation navigation__tree">
     <div class="navigation__title">Tree</div>
-      <div class="navigation-scroll">
+      <div class="navigation-scroll selenium-tree">
       {{#if hashParent}}
-        <a class="navigation__item navigation__item-tree" 
+        <a class="navigation__item navigation__item-tree selenium-back" 
         href="/parent/{{selectBranch}}/{{#if selectCommit }}{{selectCommit}}/{{/if}}{{hashParent}}">..</a>
       {{/if}}
     {{#each tree}}
-      <a class="navigation__item navigation__item-tree"
+      <a class="navigation__item navigation__item-tree selenium-tree-item {{#if this.isTree}}selenium-fold{{else}}selenium-file{{/if}}"
+         data-selenium-branch="{{../selectBranch}}"
+         data-selenium-commit="{{../selectCommit}}"
+         data-selenium-hash="{{this.hash}}"
+         data-selenium-is-tree="{{this.isTree}}"   
         {{#if this.isTree}}
         href="/tree/{{../selectBranch}}/{{#if ../selectCommit }}{{../selectCommit}}/{{/if}}{{this.hash}}"
         {{else}}
         href="/file/{{../selectBranch}}/{{#if ../selectCommit }}{{../selectCommit}}/{{/if}}{{this.hash}}"
         {{/if}}
         >
-        <div>{{this.name}}</div>
+        <div class="selenium-tree-name">{{this.name}}</div>
       </a>
     {{/each}}
     </div>
   </div>
   <div class="navigation navigation__commits">
     <div class="navigation__title">Commites</div>
-    <div class="navigation-scroll">
+    <div class="navigation-scroll selenium-commites">
     {{#each commites}}
-      <a class="navigation__item navigation__item-commit {{#eq this.fullHash ../selectCommit}}navigation__item-selected{{/eq}}" 
+      <a class="navigation__item navigation__item-commit selenium-commites-item {{#eq this.fullHash ../selectCommit}}navigation__item-selected{{/eq}}"
+         data-selenium-branch="{{this.hashBranch}}"
+         data-selenium-commit="{{this.fullHash}}"  
         {{#eq this.fullHash ../selectCommit}}
           disabled 
         {{else}}
           href="/commit/{{this.hashBranch}}/{{this.fullHash}}"
         {{/eq}}
       >
-      <div>{{this.author}}</div>
+      <div class="selenium-commites-author">{{this.author}}</div>
       <div>{{this.date}}</div>
       <div>{{this.commit}}</div>
     </a>
