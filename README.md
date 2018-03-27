@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/jnkbldgn/task-4.svg?branch=master)](https://travis-ci.org/jnkbldgn/task-4)
 # task-4
 
 Приложение отображает репозиторий ember-truth-helpers.
