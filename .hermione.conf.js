@@ -5,7 +5,12 @@ module.exports = {
     chrome: {
       desiredCapabilities: {
         browserName: 'chrome',
-      },
+      }
     },
-  },
+    firefox: {
+      desiredCapabilities: {
+        browserName: 'firefox',
+      }
+    }
+  }
 };
