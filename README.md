@@ -22,15 +22,15 @@
 Запуск unit тестов<br> 
 <code>npm run test</code>
 
-Перед запуском интеграционных тестов, следует установить selenium
-<code>selenium-standalone --global</code>
-<code>selenium-standalone install</code>
-Далее в отдельной вкладке терминала запустить selenium
-<code>selenium-standalone start</code>
-После запустить проект, например:
-<code>npm run start:dev</code>
+Перед запуском интеграционных тестов, следует установить selenium<br> 
+<code>selenium-standalone --global</code><br> 
+<code>selenium-standalone install</code><br> 
+Далее в отдельной вкладке терминала запустить selenium<br> 
+<code>selenium-standalone start</code><br> 
+После запустить проект, например:<br> 
+<code>npm run start:dev</code><br> 
 Запуск интеграционных тестов<br> 
-<code>npm run test:i</code>
+<code>npm run test:i</code><br> 
 
 Для сборки используется gulp
 
